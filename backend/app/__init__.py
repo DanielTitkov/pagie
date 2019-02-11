@@ -8,8 +8,6 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token
 
-from app.models import User
-
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -20,5 +18,6 @@ jwt = JWTManager(app)
 
 CORS(app)
 
-from app.resourses import UsersApi
+from app.resourses import UsersApi, TokenApi
 api.add_resource(UsersApi, '/v1/users', endpoint='users')
+api.add_resource(TokenApi, '/v1/token', endpoint='token')

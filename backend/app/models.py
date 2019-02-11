@@ -1,6 +1,8 @@
 from passlib.apps import custom_app_context as pwd_context
 from datetime import datetime
 import time
+from app import mongo
+from app import bcrypt
 
 
 class User:
@@ -16,11 +18,11 @@ class User:
 
 
     def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf=8')
 
 
     def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
+        return bcrypt.check_password_hash(self.password_hash, password)
 
 
     def to_dict(self, with_id=False):
@@ -39,12 +41,12 @@ class User:
     @classmethod
     def from_dict(cls, dic):
         return cls(
-            name=dic.get(name, None),
-            email=dic.get(email, None),
-            password_hash=dic.get(passwordHash, None),
-            timezone=dic.get(timezone, None),
-            created=dic.get(created, None),
-            _id=dic.get(_id, None)
+            name=dic.get('name', None),
+            email=dic.get('email', None),
+            password_hash=dic.get('passwordHash', None),
+            timezone=dic.get('timezone', None),
+            created=dic.get('created', None),
+            _id=dic.get('_id', None)
         )
 
 

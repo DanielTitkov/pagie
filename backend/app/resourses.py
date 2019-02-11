@@ -1,29 +1,30 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
+from flask_jwt_extended import create_access_token
 from app import mongo
-from app import bcrypt
 from app import jwt
 from app import api
 from app.models import User
 
 
+
 class UsersApi(Resource):
     def get(self):
-        users = mongo.db.users.find({})
-        return 'foofffdsf'
+        users =  [User.from_dict(u).to_dict() for u in mongo.db.users.find({})]
+        return users
 
 
     def post(self):
-        password = request.get_json()['password']
         user = User(
             name = request.get_json()['name'],
             email = request.get_json()['email'],
-            password_hash = bcrypt.generate_password_hash(password).decode('utf=8')
         )
+        user.hash_password(request.get_json()['password'])
 
         _id = mongo.db.users.insert(user.to_dict())
 
         return user.to_dict(), 201, {'Location': api.url_for(UsersApi, id = user._id, _external = True)}
+
 
 
 class UserApi(Resource):
@@ -38,7 +39,27 @@ class UserApi(Resource):
 
 class TokenApi(Resource):
     def get(self):
-        pass
+        if not request.is_json:
+            return {"error": "Missing JSON in request"}, 400
+
+        email = request.json.get('email', None)
+        password = request.json.get('password', None)
+
+        if email and password:
+            user = User.from_dict(mongo.db.users.find_one({'email': email}))
+            if user:
+                if user.verify_password(password):
+                    access_token = create_access_token(identity={
+                        'name': user.name,
+                        'email': user.email
+                    })
+                    return {'token': access_token}, 200
+                else:
+                    return {'error': 'invalid email or password'}, 401
+            else:
+                return {'error': 'no such user'}, 404
+        else:
+            return {'error': 'not enough data'}, 400
 
 
 
