@@ -1,0 +1,2 @@
+FLASK_APP=pagie.py
+FLASK_DEBUG=1
