@@ -15,10 +15,14 @@ class UsersApi(Resource):
 
 
     def post(self):
-        user = User(
-            name = request.get_json()['name'],
-            email = request.get_json()['email'],
-        )
+        name = request.get_json()['name']
+        email = request.get_json()['email']
+
+        if mongo.db.users.find_one({'email': email}):
+            return {'message': 'email already in use'}, 422
+
+        user = User(name=name, email=email)
+
         user.hash_password(request.get_json()['password'])
 
         _id = mongo.db.users.insert(user.to_dict())
