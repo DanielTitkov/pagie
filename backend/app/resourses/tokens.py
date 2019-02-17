@@ -14,7 +14,7 @@ class TokenApi(Resource):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('email', type=valid_email, required=True)
         self.parser.add_argument('password', required=True)
-        super(TextsApi, self).__init__()
+        super(TokenApi, self).__init__()
 
 
     def get(self):
