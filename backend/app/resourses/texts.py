@@ -11,12 +11,15 @@ import uuid
 import time
 
 
-parser = reqparse.RequestParser()
-parser.add_argument('text', required=True)
-parser.add_argument('dateslug', type=valid_dateslug, required=True)
-
 
 class TextsApi(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('text', required=True)
+        self.parser.add_argument('dateslug', type=valid_dateslug, required=True)
+        super(TextsApi, self).__init__()
+
+
     @jwt_required
     def get(self):
         '''All texts by user'''
@@ -28,7 +31,7 @@ class TextsApi(Resource):
     @jwt_required
     def post(self):
         '''Add text for current day or update if already exists'''
-        args = parser.parse_args()
+        args = self.parser.parse_args()
         current_user = User.get_by_identity(get_jwt_identity())
 
         existing_text = mongo.db.texts.find_one({'user': current_user.uid, 'date': args.dateslug})

@@ -8,15 +8,17 @@ from app.models.user import User
 from app.utils.email import valid_email
 
 
-parser = reqparse.RequestParser()
-parser.add_argument('email', type=valid_email, required=True)
-parser.add_argument('password', required=True)
-
-
 
 class TokenApi(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('email', type=valid_email, required=True)
+        self.parser.add_argument('password', required=True)
+        super(TextsApi, self).__init__()
+
+
     def get(self):
-        args = parser.parse_args()
+        args = self.parser.parse_args()
         user = User.from_dict(mongo.db.users.find_one({'email': args.email}))
         if user and user.verify_password(args.password):
             token = create_access_token(identity={'email': user.email})
