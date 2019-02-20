@@ -29,15 +29,16 @@ class User:
         return bcrypt.check_password_hash(self.password_hash, password)
 
 
-    def to_dict(self, with_id=False):
+    def to_dict(self, with_id=False, with_password=True):
         dic = dict(
             uid=self.uid,
             name=self.name,
             email=self.email,
-            passwordHash = self.password_hash,
             timezone = self.timezone,
             created = self.created
         )
+        if with_password:
+            dic['passwordHash'] = self.password_hash
         if with_id:
             dic['_id'] = ObjectId(self._id)
         return dic
