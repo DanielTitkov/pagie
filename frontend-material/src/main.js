@@ -5,6 +5,7 @@ import router from './router';
 import Vuex from 'vuex';
 import StoreData from './store';
 import { initialize } from '@/helpers/requests';
+import TextareaAutogrow from 'vue-textarea-autogrow';
 
 Vue.config.productionTip = false;
 
