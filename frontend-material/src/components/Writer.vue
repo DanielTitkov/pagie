@@ -1,22 +1,24 @@
 <template lang="html">
     <div class="writer">
         <v-layout row wrap justify-center>
-            <v-flex xs12 md10 xl8>
-                <h4 class="grey--text">
+            <v-flex xs12 md10 xl8 @keydown.ctrl.83.prevent='saveText'>
+                <h4 class="grey--text title">
                     {{ date }}, {{ currentUser.timezone }}
                 </h4>
-                <v-textarea
-                    @keyup="saveText"
-                    v-model="todaysText"
-                    :disabled="disabled"
-                    :loading="disabled"
-                    class="my-3"
-                    auto-grow
-                    label="Write your words"
-                    append-icon="favorite"
-                    row-height="50"
-                >
-                </v-textarea>
+                <div class="text-wrapper">
+                    <v-textarea
+                        @keyup="saveTextTimeout"
+                        v-model="todaysText"
+                        :disabled="disabled"
+                        :loading="disabled"
+                        class="my-3"
+                        auto-grow
+                        label="Write your words"
+                        append-icon="favorite"
+                        row-height="50"
+                        >
+                    </v-textarea>
+                </div>
             </v-flex>
         </v-layout>
         <v-layout row wrap justify-start>
@@ -69,31 +71,40 @@ export default {
         this.$store.dispatch('getDate');
     },
     methods: {
-        saveText: function() {
+        conl: function () {
+            console.log('save!');
+        },
+        saveText: function(instance, reset=true) {
+            if (reset) {
+                instance = this;
+            }
+            axios
+                .post(
+                    'http://127.0.0.1:5000/v1/texts',
+                    {
+                        text: instance.todaysText,
+                        dateslug: instance.date
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${
+                                instance.currentUser.token
+                            }`
+                        }
+                    }
+                )
+                .then(response => {
+                    instance.savedStatus = `Saved ${countWords(
+                        instance.todaysText
+                    )} words at ${response.data.updated}`;
+                });
+        },
+        saveTextTimeout: function() {
             clearTimeout(this.saveTimeout); // clear timeout variable
 
             var self = this;
             this.saveTimeout = setTimeout(function() {
-                axios
-                    .post(
-                        'http://127.0.0.1:5000/v1/texts',
-                        {
-                            text: self.todaysText,
-                            dateslug: self.date
-                        },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${
-                                    self.currentUser.token
-                                }`
-                            }
-                        }
-                    )
-                    .then(response => {
-                        self.savedStatus = `Saved ${countWords(
-                            self.todaysText
-                        )} words at ${response.data.updated}`;
-                    });
+                self.saveText(self, false);
             }, 2000);
         }
     }

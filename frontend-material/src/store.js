@@ -84,7 +84,7 @@ export default {
             axios
                 .get('http://127.0.0.1:5000/v1/texts', {
                     params: {
-                        dateslug: '20190221'
+                        dateslug: context.state.date
                     },
                     headers: {
                         Authorization: `Bearer ${
