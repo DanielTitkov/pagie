@@ -16,7 +16,7 @@ class TextsApi(Resource):
     def __init__(self):
         # get_parser
         self.get_parser = reqparse.RequestParser()
-        self.get_parser.add_argument('dateslug', type=valid_dateslug)
+        self.get_parser.add_argument('dateslug', type=valid_dateslug, location=['args'])
         # post_parser
         self.post_parser = reqparse.RequestParser()
         self.post_parser.add_argument('text', required=True)
@@ -31,6 +31,7 @@ class TextsApi(Resource):
         user = User.get_by_identity(get_jwt_identity())
         query = {'user': user.uid, 'date': args.dateslug} if args.dateslug else {'user': user.uid}
         texts = [Text.from_dict(t).to_dict() for t in mongo.db.texts.find(query)]
+        print(args)
         return texts, 200
 
 

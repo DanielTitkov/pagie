@@ -12,8 +12,8 @@
             <v-spacer></v-spacer>
             <div v-if="currentUser">
                 <!-- <h2>{{ currentUser.name }}</h2> -->
-                <v-btn flat color="grey" @click="logout">
-                    <span>Log out</span>
+                <v-btn flat mdAndUp color="grey" @click="logout">
+                    <span class="hidden-sm-and-down">Log out</span>
                     <v-icon right>exit_to_app</v-icon>
                 </v-btn>
             </div>
