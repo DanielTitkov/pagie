@@ -1,7 +1,6 @@
 <template>
     <div class="about">
         <h1 class="secondary--text">Write!</h1>
-        <h2>{{ date }}</h2>
         <v-container class="my-5">
             <!-- <Calendar /> -->
             <Writer :dateslug='date' />

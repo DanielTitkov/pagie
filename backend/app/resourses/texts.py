@@ -31,7 +31,6 @@ class TextsApi(Resource):
         user = User.get_by_identity(get_jwt_identity())
         query = {'user': user.uid, 'date': args.dateslug} if args.dateslug else {'user': user.uid}
         texts = [Text.from_dict(t).to_dict() for t in mongo.db.texts.find(query)]
-        print(args)
         return texts, 200
 
 

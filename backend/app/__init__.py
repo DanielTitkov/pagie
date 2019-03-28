@@ -18,7 +18,7 @@ jwt = JWTManager(app)
 
 CORS(app)
 
-from app.resourses.dates import DateApi
+from app.resourses.dates import DateApi, DatesApi
 from app.resourses.tokens import TokenApi
 from app.resourses.users import UsersApi, UserApi
 from app.resourses.texts import TextsApi
@@ -26,5 +26,6 @@ from app.resourses.texts import TextsApi
 api.add_resource(UsersApi, '/v1/users', endpoint='users')
 api.add_resource(UserApi, '/v1/users/<uid>', endpoint='user')
 api.add_resource(TokenApi, '/v1/token', endpoint='token')
+api.add_resource(DatesApi, '/v1/dates', endpoint='dates')
 api.add_resource(DateApi, '/v1/date', endpoint='date')
 api.add_resource(TextsApi, '/v1/texts', endpoint='texts')

@@ -3,10 +3,7 @@
         <v-layout row wrap justify-center>
             <v-flex xs12 md10 lg8 xl6 @keydown.ctrl.83.prevent='saveText'>
                 <h4 class="grey--text title">
-                    Text from {{ dateslug | toReadableDate }}, {{ currentUser.timezone }}
-                </h4>
-                <h4 class="grey--text title">
-                    Today is  {{ date | toReadableDate }}, {{ currentUser.timezone }}
+                    {{ dateslug | toReadableDate }}, {{ currentUser.timezone }}
                 </h4>
                 <div class="text-wrapper">
                     <v-textarea
@@ -103,7 +100,11 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.text = response.data[0].text;
+                    if (response.data[0]) {
+                        this.text = response.data[0].text;
+                    } else {
+                        this.text = 'No text for this date';
+                    }
                     this.loading = false;
                 })
                 .catch(error => {
