@@ -10,7 +10,7 @@ export default {
         loading: false,
         authError: null,
         date: null,
-        todaysText: ''
+        darkTheme: false
     },
     getters: {
         isLoading(state) {
@@ -27,9 +27,6 @@ export default {
         },
         date(state) {
             return state.date;
-        },
-        todaysText(state) {
-            return state.todaysText;
         }
     },
     mutations: {
@@ -57,9 +54,6 @@ export default {
         },
         updateDate(state, payload) {
             state.date = payload;
-        },
-        updateTodaysText(state, payload) {
-            state.todaysText = payload;
         }
     },
     actions: {
@@ -77,26 +71,6 @@ export default {
                 })
                 .then(response => {
                     context.commit('updateDate', response.data.dateslug);
-                    context.dispatch('getTodaysText');
-                });
-        },
-        getTodaysText(context) {
-            axios
-                .get('http://127.0.0.1:5000/v1/texts', {
-                    params: {
-                        dateslug: context.state.date
-                    },
-                    headers: {
-                        Authorization: `Bearer ${
-                            context.state.currentUser.token
-                        }`
-                    }
-                })
-                .then(response => {
-                    context.commit('updateTodaysText', response.data[0].text);
-                })
-                .catch(error => {
-                    console.log(error);
                 });
         }
     }

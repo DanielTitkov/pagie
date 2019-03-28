@@ -13,6 +13,17 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store(StoreData);
 
+Vue.filter('toReadableDate', function(value) {
+    try {
+        var year = value.slice(0, 4);
+        var month = value.slice(4, 6);
+        var day = value.slice(6, 8);
+        return day + '.' + month + '.' + year
+    } catch {
+        return 'loading...'
+    }
+});
+
 initialize(store, router);
 
 new Vue({

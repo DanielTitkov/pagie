@@ -17,6 +17,14 @@ export default new Router({
             }
         },
         {
+            path: '/history/:dateslug',
+            name: 'history',
+            component: () => import('./views/History.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/about',
             name: 'about',
             // route level code-splitting

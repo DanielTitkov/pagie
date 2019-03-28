@@ -2,7 +2,7 @@
     <div class="login">
         <v-layout row wrap justify-center>
             <v-flex xs12 sm9 md7 lg5>
-                <v-card>
+                <v-card flat>
                     <v-card-title>
                         <h2 class="grey--text">Login to Pagie</h2>
                     </v-card-title>

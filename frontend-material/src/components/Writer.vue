@@ -3,12 +3,15 @@
         <v-layout row wrap justify-center>
             <v-flex xs12 md10 lg8 xl6 @keydown.ctrl.83.prevent='saveText'>
                 <h4 class="grey--text title">
-                    {{ date }}, {{ currentUser.timezone }}
+                    Text from {{ dateslug | toReadableDate }}, {{ currentUser.timezone }}
+                </h4>
+                <h4 class="grey--text title">
+                    Today is  {{ date | toReadableDate }}, {{ currentUser.timezone }}
                 </h4>
                 <div class="text-wrapper">
                     <v-textarea
                         @keyup="saveTextTimeout"
-                        v-model="todaysText"
+                        v-model="text"
                         :disabled="disabled"
                         :loading="disabled"
                         class="title my-3 font-weight-regular"
@@ -38,15 +41,29 @@ import { countWords } from '@/helpers/text';
 import axios from 'axios';
 
 export default {
+    props: {
+        dateslug: {
+            type: String,
+            required: false,
+            default: '',
+        }
+    },
     data() {
         return {
             savedStatus: null,
-            saveTimeout: null
+            saveTimeout: null,
+            text: '',
+            loading: false
         };
+    },
+    watch: {
+        dateslug: function () {
+            this.getText();
+        }
     },
     computed: {
         wordsCount() {
-            return countWords(this.todaysText);
+            return countWords(this.text);
         },
         date() {
             return this.$store.getters.date;
@@ -55,24 +72,43 @@ export default {
             return this.$store.getters.currentUser;
         },
         disabled() {
-            return false;
-            // this.$store.getters.todaysText;
-        },
-        todaysText: {
-            get() {
-                return this.$store.getters.todaysText;
-            },
-            set(value) {
-                this.$store.commit('updateTodaysText', value);
+            if (this.dateslug == this.date && !this.loading) {
+                return false;
+            } else {
+                return true;
             }
         }
     },
+    created() {
+        if (this.dateslug && this.dateslug.length == 8) {
+            this.getText();
+            console.log('Dateslug aquired too early')
+        }
+    },
     mounted() {
-        this.$store.dispatch('getDate');
     },
     methods: {
-        conl: function () {
-            console.log('save!');
+        getText: function() {
+            this.loading = true;
+            this.text = 'loading...';
+            axios
+                .get('http://127.0.0.1:5000/v1/texts', {
+                    params: {
+                        dateslug: this.dateslug
+                    },
+                    headers: {
+                        Authorization: `Bearer ${
+                            this.$store.getters.currentUser.token
+                        }`
+                    }
+                })
+                .then(response => {
+                    this.text = response.data[0].text;
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         saveText: function(instance, reset=true) {
             if (reset) {
@@ -83,7 +119,7 @@ export default {
                 .post(
                     'http://127.0.0.1:5000/v1/texts',
                     {
-                        text: instance.todaysText,
+                        text: instance.text,
                         dateslug: instance.date
                     },
                     {
@@ -96,7 +132,7 @@ export default {
                 )
                 .then(response => {
                     instance.savedStatus = `Saved ${countWords(
-                        instance.todaysText
+                        instance.text
                     )} words at ${response.data.updated}`;
                 });
         },
