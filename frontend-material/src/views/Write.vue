@@ -2,9 +2,8 @@
     <div class="about">
         <h1 class="secondary--text">Write!</h1>
         <v-container class="my-5">
-            <!-- <Calendar /> -->
+            <Calendar />
             <Writer :dateslug='date' />
-            <!-- <Writer /> -->
         </v-container>
     </div>
 </template>

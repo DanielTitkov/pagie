@@ -6,6 +6,7 @@ from app import jwt
 from app import api
 from app.models.user import User
 from app.models.text import Text
+from app.utils.date import current_date
 from dateutil import rrule
 import datetime
 import pytz
@@ -18,8 +19,7 @@ class DatesApi(Resource):
         current_user = User.get_by_identity(get_jwt_identity())
         query = ({'user': current_user.uid}, {'date': 1, '_id': 0})
         dates_with_text = [t['date'] for t in mongo.db.texts.find(*query)]
-        tz = pytz.timezone(current_user.timezone)
-        ct = datetime.datetime.now(tz=tz)
+        ct = current_date(current_user)
         st = ct - datetime.timedelta(days = 30)
         dates = [d.strftime('%Y%m%d') for d in rrule.rrule(rrule.DAILY, dtstart=st, until=ct)]
         response = [{'date': d, 'textPresent': d in dates_with_text} for d in dates]
@@ -31,8 +31,7 @@ class DateApi(Resource):
     @jwt_required
     def get(self):
         current_user = User.get_by_identity(get_jwt_identity())
-        tz = pytz.timezone(current_user.timezone)
-        ct = datetime.datetime.now(tz=tz)
+        ct = current_date(current_user)
         response = {
             'timezone': current_user.timezone,
             'datetime': ct.isoformat(),

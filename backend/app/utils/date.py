@@ -44,3 +44,10 @@ def valid_timezone(string):
         return string
     else:
         raise ValueError('{} is not a valid timezone'.format(string))
+
+
+# CURRENT DATE #
+
+def current_date(user):
+    tz = pytz.timezone(user.timezone)
+    return datetime.datetime.now(tz=tz)

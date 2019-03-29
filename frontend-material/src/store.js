@@ -10,7 +10,8 @@ export default {
         loading: false,
         authError: null,
         date: null,
-        darkTheme: false
+        darkTheme: false,
+        datesData: []
     },
     getters: {
         isLoading(state) {
@@ -27,6 +28,9 @@ export default {
         },
         date(state) {
             return state.date;
+        },
+        datesData(state) {
+            return state.datesData;
         }
     },
     mutations: {
@@ -54,6 +58,9 @@ export default {
         },
         updateDate(state, payload) {
             state.date = payload;
+        },
+        updateDatesData(state, payload) {
+            state.datesData = payload;
         }
     },
     actions: {
@@ -72,6 +79,17 @@ export default {
                 .then(response => {
                     context.commit('updateDate', response.data.dateslug);
                 });
+        },
+        getDatesData(context) {
+            axios.get('http://127.0.0.1:5000/v1/dates', {
+                headers: {
+                    Authorization: `Bearer ${
+                        context.state.currentUser.token
+                    }`
+                }
+            }).then(response => {
+                context.commit('updateDatesData', response.data)
+            });
         }
     }
 };

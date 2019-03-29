@@ -2,7 +2,7 @@
     <div class="about">
         <h1 class="secondary--text">Write!</h1>
         <v-container class="my-5">
-            <!-- <Calendar /> -->
+            <Calendar />
             <Writer :dateslug='dateslug' />
         </v-container>
     </div>
@@ -21,6 +21,21 @@ export default {
     components: {
         Writer,
         Calendar
+    },
+    created() {
+        this.$store.dispatch('getDate');
+    },
+    computed: {
+        date() {
+            return this.$store.getters.date;
+        },
+    },
+    beforeRouteUpdate (to, from, next) {
+        this.dateslug = to.params.dateslug;
+        if (this.dateslug == this.date) {
+            this.$router.push('/');
+        }
+        next();
     }
 };
 </script>
