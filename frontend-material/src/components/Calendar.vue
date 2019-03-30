@@ -9,6 +9,8 @@
                                 <v-icon :color=selectColor(date) v-on="on" :class="{textPresent: date.textPresent}">fiber_manual_record</v-icon>
                             </template>
                             <span>{{ date.date | toReadableDate }}</span>
+                            <h1>Foo</h1>
+                            <p>Moo badd</p>
                         </v-tooltip>
                     </router-link>
                 </span>
@@ -22,21 +24,33 @@ export default {
     data() {
         return {
             selectedDate: null,
+            dateslug: this.$route.params.dateslug
         }
     },
     computed: {
         datesData() {
             return this.$store.getters.datesData;
+        },
+        currentDate() {
+            return this.$store.getters.date;
         }
     },
     methods: {
         selectColor(dateObj) {
-            return dateObj.textPresent ? "primary" : "grey";
+            return dateObj.date == this.currentDate ? "secondary" : (dateObj.textPresent ? "primary" : "grey");
+        },
+        ifSelected(dateObj) {
+            return dateObj.date == this.dateslug ? true : false;
         }
     },
     created() {
         this.$store.dispatch('getDatesData');
-    }
+    },
+    watch: {
+      '$route' (to, from) {
+          this.dateslug = to.params.dateslug;
+      }
+  }
 }
 </script>
 
@@ -48,7 +62,12 @@ export default {
 
 }
 .calendar-item-wrapper:last-child {
-    border: 2px solid red;
-    background-color: black;
+    /* border: 2px solid red;
+    background-color: black; */
+}
+.router-link-active {
+    /* display: inline-block;
+    border-radius: 50%;
+    border: 1px solid blue; */
 }
 </style>

@@ -21,6 +21,7 @@ class TextsApi(Resource):
         self.post_parser = reqparse.RequestParser()
         self.post_parser.add_argument('text', required=True)
         self.post_parser.add_argument('dateslug', type=valid_dateslug, required=True)
+        self.post_parser.add_argument('words', type=int, required=False) # maybe better to count on frontend
         super(TextsApi, self).__init__()
 
 

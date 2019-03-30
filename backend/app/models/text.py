@@ -11,12 +11,12 @@ class Text:
         self.user = user
         self.tid = tid or uuid.uuid4().hex
         self.text = text
-        self.words = self.count_words
+        self.words = self.count_words()
         self.created = created or time.time()
         self.updated = updated or time.time()
         self.date = date
         self._id = _id
-        # self.structure = structure
+        self.structure = structure
 
 
     def count_words(self):
@@ -30,6 +30,7 @@ class Text:
             user=self.user,
             text=self.text,
             date=self.date,
+            words=self.words,
             created=self.created,
             updated=self.updated
         )
@@ -46,6 +47,7 @@ class Text:
                 user=dic.get('user', None),
                 text=dic.get('text', None),
                 date=dic.get('date', None),
+                words=dic.get('words', None),
                 created=dic.get('created', None),
                 updated=dic.get('updated', None),
                 _id=dic.get('_id', None)
