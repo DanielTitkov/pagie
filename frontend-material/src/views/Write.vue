@@ -3,7 +3,7 @@
         <h1 class="secondary--text">Write!</h1>
         <v-container class="my-5">
             <Calendar />
-            <Writer :dateslug='date' />
+            <Writer :dateslug="date" />
         </v-container>
     </div>
 </template>

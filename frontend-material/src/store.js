@@ -81,15 +81,17 @@ export default {
                 });
         },
         getDatesData(context) {
-            axios.get('http://127.0.0.1:5000/v1/dates', {
-                headers: {
-                    Authorization: `Bearer ${
-                        context.state.currentUser.token
-                    }`
-                }
-            }).then(response => {
-                context.commit('updateDatesData', response.data)
-            });
+            axios
+                .get('http://127.0.0.1:5000/v1/dates', {
+                    headers: {
+                        Authorization: `Bearer ${
+                            context.state.currentUser.token
+                        }`
+                    }
+                })
+                .then(response => {
+                    context.commit('updateDatesData', response.data);
+                });
         }
     }
 };

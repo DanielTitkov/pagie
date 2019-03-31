@@ -3,14 +3,22 @@
         <v-layout row wrap justify-center>
             <v-flex xs12 md10 lg8 xl6 my-3>
                 <span class="calendar-item-wrapper" v-for="date in datesData">
-                    <router-link :to="{name: 'history', params: {dateslug: date.date}}">
+                    <router-link
+                        :to="{
+                            name: 'history',
+                            params: { dateslug: date.date }
+                        }"
+                    >
                         <v-tooltip top>
                             <template v-slot:activator="{ on }">
-                                <v-icon :color=selectColor(date) v-on="on" :class="{textPresent: date.textPresent}">fiber_manual_record</v-icon>
+                                <v-icon
+                                    :color="selectColor(date)"
+                                    v-on="on"
+                                    :class="{ textPresent: date.textPresent }"
+                                    >fiber_manual_record</v-icon
+                                >
                             </template>
                             <span>{{ date.date | toReadableDate }}</span>
-                            <h1>Foo</h1>
-                            <p>Moo badd</p>
                         </v-tooltip>
                     </router-link>
                 </span>
@@ -25,7 +33,7 @@ export default {
         return {
             selectedDate: null,
             dateslug: this.$route.params.dateslug
-        }
+        };
     },
     computed: {
         datesData() {
@@ -37,7 +45,11 @@ export default {
     },
     methods: {
         selectColor(dateObj) {
-            return dateObj.date == this.currentDate ? "secondary" : (dateObj.textPresent ? "primary" : "grey");
+            return dateObj.date == this.currentDate
+                ? 'secondary'
+                : dateObj.textPresent
+                ? 'primary'
+                : 'grey';
         },
         ifSelected(dateObj) {
             return dateObj.date == this.dateslug ? true : false;
@@ -47,19 +59,17 @@ export default {
         this.$store.dispatch('getDatesData');
     },
     watch: {
-      '$route' (to, from) {
-          this.dateslug = to.params.dateslug;
-      }
-  }
-}
+        $route(to, from) {
+            this.dateslug = to.params.dateslug;
+        }
+    }
+};
 </script>
 
 <style scoped>
 .textPresent {
-
 }
 .calendar {
-
 }
 .calendar-item-wrapper:last-child {
     /* border: 2px solid red;

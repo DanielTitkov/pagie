@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="writer">
         <v-layout row wrap justify-center>
-            <v-flex xs12 md10 lg8 xl6 @keydown.ctrl.83.prevent='saveText'>
+            <v-flex xs12 md10 lg8 xl6 @keydown.ctrl.83.prevent="saveText">
                 <h4 class="grey--text title">
                     {{ dateslug | toReadableDate }}, {{ currentUser.timezone }}
                 </h4>
@@ -14,16 +14,17 @@
                         class="title my-3 font-weight-regular"
                         auto-grow
                         label="Write your words"
-                        color='grey lighten-1'
+                        color="grey lighten-1"
                         row-height="50"
-                        />
-                    </v-textarea>
+                    />
                 </div>
             </v-flex>
         </v-layout>
         <v-layout row wrap justify-start>
             <v-flex xs0 md1 lg2 xl3></v-flex>
-            <v-flex xs6 md2 lg2 xl2 class='grey--text'>{{ savedStatus }}</v-flex>
+            <v-flex xs6 md2 lg2 xl2 class="grey--text">{{
+                savedStatus
+            }}</v-flex>
             <v-spacer></v-spacer>
             <v-flex xs6 md2 lg2 xl2 class="text-xs-right grey--text">
                 {{ wordsCount }} words
@@ -42,7 +43,7 @@ export default {
         dateslug: {
             type: String,
             required: false,
-            default: '',
+            default: ''
         }
     },
     data() {
@@ -54,7 +55,7 @@ export default {
         };
     },
     watch: {
-        dateslug: function () {
+        dateslug: function() {
             this.getText();
         }
     },
@@ -79,11 +80,10 @@ export default {
     created() {
         if (this.dateslug && this.dateslug.length == 8) {
             this.getText();
-            console.log('Dateslug aquired too early')
+            console.log('Dateslug aquired too early');
         }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
         getText: function() {
             this.loading = true;
@@ -111,11 +111,11 @@ export default {
                     console.log(error);
                 });
         },
-        saveText: function(instance, reset=true) {
+        saveText: function(instance, reset = true) {
             if (reset) {
                 instance = this;
             }
-            instance.savedStatus = 'saving...'
+            instance.savedStatus = 'saving...';
             axios
                 .post(
                     'http://127.0.0.1:5000/v1/texts',
