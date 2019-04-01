@@ -37,6 +37,7 @@
 <script>
 import { countWords } from '@/helpers/text';
 import axios from 'axios';
+import config from "@/config";
 
 export default {
     props: {
@@ -89,7 +90,7 @@ export default {
             this.loading = true;
             this.text = 'loading...';
             axios
-                .get('http://127.0.0.1:5000/v1/texts', {
+                .get(config.API_URL + 'texts', {
                     params: {
                         dateslug: this.dateslug
                     },
@@ -118,7 +119,7 @@ export default {
             instance.savedStatus = 'saving...';
             axios
                 .post(
-                    'http://127.0.0.1:5000/v1/texts',
+                    config.API_URL + 'texts',
                     {
                         text: instance.text,
                         dateslug: instance.date

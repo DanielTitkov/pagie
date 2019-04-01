@@ -1,5 +1,6 @@
 import { getLocalUser } from '@/helpers/auth';
 import axios from 'axios';
+import config from "@/config";
 
 const user = getLocalUser();
 
@@ -73,7 +74,7 @@ export default {
         },
         getDate(context) {
             axios
-                .get('http://127.0.0.1:5000/v1/date', {
+                .get(config.API_URL + 'date', {
                     headers: {
                         Authorization: `Bearer ${
                             context.state.currentUser.token
@@ -86,7 +87,7 @@ export default {
         },
         getDatesData(context) {
             axios
-                .get('http://127.0.0.1:5000/v1/dates', {
+                .get(config.API_URL + 'dates', {
                     headers: {
                         Authorization: `Bearer ${
                             context.state.currentUser.token
@@ -101,7 +102,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .post(
-                        'http://127.0.0.1:5000/v1/users/' + payload.uid,
+                        config.API_URL + 'users/' + payload.uid,
                         payload,
                         {
                             headers: {
