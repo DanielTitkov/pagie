@@ -10,6 +10,8 @@ from app.utils.email import valid_email
 from app.utils.password import valid_password
 from app.utils.date import valid_timezone
 
+import time
+
 
 class UsersApi(Resource):
     def __init__(self):
@@ -51,6 +53,7 @@ class UserApi(Resource):
         super(UserApi, self).__init__()
 
 
+    @jwt_required
     def get(self, uid):
         user = User.from_dict(mongo.db.users.find_one({'uid': uid}))
         if not user:
@@ -58,7 +61,9 @@ class UserApi(Resource):
         return user.to_dict()
 
 
+    @jwt_required
     def post(self, uid):
+        '''update user'''
         user = User.from_dict(mongo.db.users.find_one({'uid': uid}))
         if not user:
             return {'message': "user with id '{}' not found".format(uid)}, 404
@@ -67,9 +72,10 @@ class UserApi(Resource):
         user.update_from_dict(args, update_password=True)
         mongo.db.users.save(user.to_dict(with_id=True))
 
-        return user.to_dict(), 200
+        return user.to_dict(with_password=False), 200
 
 
+    @jwt_required
     def delete(self, uid):
         user = User.from_dict(mongo.db.users.find_one({'uid': uid}))
         if not user:

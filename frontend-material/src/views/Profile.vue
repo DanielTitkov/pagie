@@ -10,11 +10,10 @@
 <script>
 export default {
     data() {
-        return {
-        }
+        return {};
     },
     components: {
-        UserDetails: () => import('@/components/UserDetails.vue'),
-    },
+        UserDetails: () => import('@/components/UserDetails.vue')
+    }
 };
 </script>

@@ -61,6 +61,10 @@ export default {
         },
         updateDatesData(state, payload) {
             state.datesData = payload;
+        },
+        updateCurrentUser(state, payload) {
+            state.currentUser = payload;
+            localStorage.setItem('user', JSON.stringify(state.currentUser));
         }
     },
     actions: {
@@ -92,6 +96,35 @@ export default {
                 .then(response => {
                     context.commit('updateDatesData', response.data);
                 });
+        },
+        updateUser({ commit, state }, payload) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post(
+                        'http://127.0.0.1:5000/v1/users/' + payload.uid,
+                        payload,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${
+                                    state.currentUser.token
+                                }`
+                            }
+                        }
+                    )
+                    .then(response => {
+                        commit(
+                            'updateCurrentUser',
+                            Object.assign({}, response.data, {
+                                token: state.currentUser.token
+                            })
+                        );
+                        resolve(response);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        reject(err);
+                    });
+            });
         }
     }
 };
