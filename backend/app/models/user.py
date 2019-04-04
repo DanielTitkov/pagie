@@ -74,5 +74,11 @@ class User:
 
 
     @classmethod
+    def get_by_uid(cls, uid):
+        user = mongo.db.users.find_one({'uid': uid})
+        return cls.from_dict(user)
+
+
+    @classmethod
     def get_by_identity(cls, identity):
-        return cls.get_by_email(identity['email'])
+        return cls.get_by_uid(identity['uid'])

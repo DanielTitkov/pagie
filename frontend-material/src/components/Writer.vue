@@ -22,9 +22,10 @@
         </v-layout>
         <v-layout row wrap justify-start>
             <v-flex xs0 md1 lg2 xl3></v-flex>
-            <v-flex xs6 md2 lg2 xl2 class="grey--text">{{
-                savedStatus
-            }}</v-flex>
+            <v-flex xs6 md2 lg2 xl2 class="grey--text"
+                >{{ savedStatus }}
+                <!-- <span v-if="savedTime">{{ savedTime | tsToDatetime }}</span> -->
+            </v-flex>
             <v-spacer></v-spacer>
             <v-flex xs6 md2 lg2 xl2 class="text-xs-right grey--text">
                 {{ wordsCount }} words
@@ -39,6 +40,8 @@ import { countWords } from '@/helpers/text';
 import axios from 'axios';
 import config from "@/config";
 
+var moment = require('moment');
+
 export default {
     props: {
         dateslug: {
@@ -50,6 +53,7 @@ export default {
     data() {
         return {
             savedStatus: null,
+            // savedTime: null,
             saveTimeout: null,
             text: '',
             loading: false
@@ -135,7 +139,8 @@ export default {
                 .then(response => {
                     instance.savedStatus = `Saved ${countWords(
                         instance.text
-                    )} words at ${response.data.updated}`;
+                    )} words at ${moment().format('HH:mm')}`;
+                    // instance.savedTime = response.data.updated * 1000; // Python timestamps are in seconds
                 });
         },
         saveTextTimeout: function() {

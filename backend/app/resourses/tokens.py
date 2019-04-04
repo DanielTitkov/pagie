@@ -21,7 +21,7 @@ class TokenApi(Resource):
         args = self.parser.parse_args()
         user = User.from_dict(mongo.db.users.find_one({'email': args.email}))
         if user and user.verify_password(args.password):
-            token = create_access_token(identity={'email': user.email})
+            token = create_access_token(identity={'uid': user.uid})
             return {
                 'access_token': token,
                 'user': user.to_dict(with_password=False),
