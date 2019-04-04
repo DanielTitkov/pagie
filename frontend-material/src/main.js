@@ -23,6 +23,14 @@ Vue.filter('toReadableDate', function(value) {
     }
 });
 
+// var moment = require('moment');
+//
+// Vue.filter('tsToDatetime', function(ts) {
+//     var date = new Date(ts);
+//     // return date.toISOString();
+//     return moment().format('HH:mm');
+// });
+
 initialize(store, router);
 
 new Vue({
