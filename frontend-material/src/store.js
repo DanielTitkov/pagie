@@ -9,7 +9,7 @@ export default {
     state: {
         currentUser: user,
         currentUserKey: userKey,
-        isLoggedIn: !!user,
+        isLoggedIn: !!user && !!userKey,
         loading: false,
         authError: null,
         date: null,
@@ -48,10 +48,12 @@ export default {
             state.authError = null;
             state.isLoggedIn = true;
             state.loading = false;
-            state.currentUser = Object.assign({}, payload.user, {
-                token: payload.access_token
+            state.currentUser = Object.assign({}, payload.response.user, {
+                token: payload.response.access_token
             });
             localStorage.setItem('user', JSON.stringify(state.currentUser));
+            localStorage.setItem('userKey', payload.decryptedUserKey);
+            state.currentUserKey = payload.decryptedUserKey;
         },
         saveUserKey(state, payload) { // not really good??
             localStorage.setItem('userKey', payload);

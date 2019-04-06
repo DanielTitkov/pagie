@@ -61,9 +61,15 @@ export default {
             this.$store.dispatch('login');
             login(this.$data.form)
                 .then(response => {
-                    this.$store.commit('loginSuccess', response);
                     var decryptedUserKey = decryptUserData(response.user.userKey, hashUserPassword(this.$data.form.password));
-                    this.$store.commit('saveUserKey', decryptedUserKey);
+                    // this.$store.commit('saveUserKey', decryptedUserKey);
+                    const loginData = {
+                        response: response,
+                        decryptedUserKey: decryptedUserKey
+                    }
+                    console.log(loginData);
+                    // this.$store.commit('loginSuccess', response);
+                    this.$store.commit('loginSuccess', loginData);
                     this.$router.push({ path: '/' });
                 })
                 .catch(error => {
