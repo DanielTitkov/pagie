@@ -1,16 +1,14 @@
-import { getLocalUser } from '@/helpers/auth';
+import { getLocalUser, getLocalUserKey } from '@/helpers/auth';
 import axios from 'axios';
-<<<<<<< HEAD
-import config from "@/config";
-=======
 import config from '@/config';
->>>>>>> encryption
 
 const user = getLocalUser();
+const userKey = getLocalUserKey();
 
 export default {
     state: {
         currentUser: user,
+        currentUserKey: userKey,
         isLoggedIn: !!user,
         loading: false,
         authError: null,
@@ -27,6 +25,9 @@ export default {
         },
         currentUser(state) {
             return state.currentUser;
+        },
+        currentUserKey(state) {
+            return state.currentUserKey;
         },
         authError(state) {
             return state.authError;
@@ -52,14 +53,19 @@ export default {
             });
             localStorage.setItem('user', JSON.stringify(state.currentUser));
         },
+        saveUserKey(state, payload) { // not really good??
+            localStorage.setItem('userKey', payload);
+        },
         loginFailed(state, payload) {
             state.loading = false;
             state.authError = payload.error;
         },
         logout(state) {
             localStorage.removeItem('user');
+            localStorage.removeItem('userKey');
             state.isLoggedIn = false;
             state.currentUser = null;
+            state.currentUserKey = null;
         },
         updateDate(state, payload) {
             state.date = payload;
@@ -105,7 +111,6 @@ export default {
         updateUser({ commit, state }, payload) {
             return new Promise((resolve, reject) => {
                 axios
-<<<<<<< HEAD
                     .post(
                         config.API_URL + 'users/' + payload.uid,
                         payload,
@@ -115,12 +120,6 @@ export default {
                                     state.currentUser.token
                                 }`
                             }
-=======
-                    .post(config.API_URL + 'users/' + payload.uid, payload, {
-                        headers: {
-                            Authorization: `Bearer ${state.currentUser.token}`
->>>>>>> encryption
-                        }
                     })
                     .then(response => {
                         commit(

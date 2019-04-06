@@ -44,6 +44,7 @@
 
 <script>
 import { login } from '@/helpers/auth';
+import { decryptUserData, hashUserPassword } from '@/helpers/crypto';
 
 export default {
     data() {
@@ -61,6 +62,8 @@ export default {
             login(this.$data.form)
                 .then(response => {
                     this.$store.commit('loginSuccess', response);
+                    var decryptedUserKey = decryptUserData(response.user.userKey, hashUserPassword(this.$data.form.password));
+                    this.$store.commit('saveUserKey', decryptedUserKey);
                     this.$router.push({ path: '/' });
                 })
                 .catch(error => {

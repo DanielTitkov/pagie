@@ -11,17 +11,12 @@ class Text:
         self.user = user
         self.tid = tid or uuid.uuid4().hex
         self.text = text
-        self.words = self.count_words()
+        self.words = words
         self.created = created or time.time()
         self.updated = updated or time.time()
         self.date = date
         self._id = _id
         self.structure = structure
-
-
-    def count_words(self):
-        if self.text:
-            return len(self.text.split(' '))
 
 
     def to_dict(self, with_id=False):

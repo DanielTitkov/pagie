@@ -24,6 +24,18 @@ export function getLocalUser() {
     return JSON.parse(userStr);
 }
 
+
+export function getLocalUserKey() {
+    const userKey = localStorage.getItem('userKey');
+
+    if (!userKey) {
+        return null;
+    }
+
+    return userKey
+}
+
+
 export function postUser(userData) {
     return new Promise((res, rej) => {
         axios

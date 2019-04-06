@@ -37,6 +37,7 @@
 
 <script>
 import { countWords } from '@/helpers/text';
+import { encryptUserData, decryptUserData } from '@/helpers/crypto';
 import axios from 'axios';
 import config from "@/config";
 
@@ -74,6 +75,9 @@ export default {
         currentUser() {
             return this.$store.getters.currentUser;
         },
+        currentUserKey() {
+            return this.$store.getters.currentUserKey;
+        },
         disabled() {
             if (this.dateslug == this.date && !this.loading) {
                 return false;
@@ -106,7 +110,8 @@ export default {
                 })
                 .then(response => {
                     if (response.data[0]) {
-                        this.text = response.data[0].text;
+                        var encryptedText = response.data[0].text;
+                        this.text = decryptUserData(encryptedText, this.currentUserKey);
                     } else {
                         this.text = 'No text for this date';
                     }
@@ -125,7 +130,7 @@ export default {
                 .post(
                     config.API_URL + 'texts',
                     {
-                        text: instance.text,
+                        text: encryptUserData(instance.text, instance.currentUserKey),
                         dateslug: instance.date
                     },
                     {
