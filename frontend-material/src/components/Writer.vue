@@ -131,7 +131,8 @@ export default {
                     config.API_URL + 'texts',
                     {
                         text: encryptUserData(instance.text, instance.currentUserKey),
-                        dateslug: instance.date
+                        dateslug: instance.date,
+                        words: instance.wordsCount,
                     },
                     {
                         headers: {

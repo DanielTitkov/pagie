@@ -21,7 +21,7 @@ class TextsApi(Resource):
         self.post_parser = reqparse.RequestParser()
         self.post_parser.add_argument('text', required=True)
         self.post_parser.add_argument('dateslug', type=valid_dateslug, required=True)
-        self.post_parser.add_argument('words', type=int, required=False) # maybe better to count on frontend
+        self.post_parser.add_argument('words', type=int, required=False) # should be count on fronted bc of encryption
         super(TextsApi, self).__init__()
 
 
@@ -46,10 +46,11 @@ class TextsApi(Resource):
             text = Text.from_dict(existing_text)
             text.updated = time.time()
             text.text = args.text
+            text.words = args.words
             mongo.db.texts.save(text.to_dict(with_id=True))
             code = 200
         else:
-            text = Text(user=current_user.uid, text=args.text, date=args.dateslug)
+            text = Text(user=current_user.uid, text=args.text, date=args.dateslug, words=args.words)
             mongo.db.texts.insert(text.to_dict())
             code = 201
 
