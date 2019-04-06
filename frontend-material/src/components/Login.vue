@@ -31,6 +31,9 @@
                                 @click="authenticate"
                                 >Sign in</v-btn
                             >
+                            <router-link to="register"
+                                >Or create account</router-link
+                            >
                         </v-form>
                     </v-card-text>
                 </v-card>

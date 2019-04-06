@@ -1,6 +1,10 @@
 import { getLocalUser } from '@/helpers/auth';
 import axios from 'axios';
+<<<<<<< HEAD
 import config from "@/config";
+=======
+import config from '@/config';
+>>>>>>> encryption
 
 const user = getLocalUser();
 
@@ -101,6 +105,7 @@ export default {
         updateUser({ commit, state }, payload) {
             return new Promise((resolve, reject) => {
                 axios
+<<<<<<< HEAD
                     .post(
                         config.API_URL + 'users/' + payload.uid,
                         payload,
@@ -110,8 +115,13 @@ export default {
                                     state.currentUser.token
                                 }`
                             }
+=======
+                    .post(config.API_URL + 'users/' + payload.uid, payload, {
+                        headers: {
+                            Authorization: `Bearer ${state.currentUser.token}`
+>>>>>>> encryption
                         }
-                    )
+                    })
                     .then(response => {
                         commit(
                             'updateCurrentUser',

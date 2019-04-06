@@ -9,11 +9,12 @@ import uuid
 
 class User:
     def __init__(self, uid=None, name=None, email=None, password_hash=None,
-        timezone='America/New_York',
+        timezone='America/New_York', user_key=None,
         created=None, _id=None
     ):
         self.uid = uid or uuid.uuid4().hex
         self.name = name
+        self.user_key = user_key
         self.email = email
         self.password_hash = password_hash
         self.timezone = timezone
@@ -35,7 +36,8 @@ class User:
             name=self.name,
             email=self.email,
             timezone = self.timezone,
-            created = self.created
+            created = self.created,
+            userKey = self.user_key,
         )
         if with_password:
             dic['passwordHash'] = self.password_hash
@@ -55,7 +57,7 @@ class User:
 
     @classmethod
     def from_dict(cls, dic):
-        if dic:
+        if dic: # wtf is this? 
             return cls(
                 uid=dic.get('uid', None),
                 name=dic.get('name', None),
@@ -63,12 +65,14 @@ class User:
                 password_hash=dic.get('passwordHash', None),
                 timezone=dic.get('timezone', None),
                 created=dic.get('created', None),
+                user_key=dic.get('userKey', None),
                 _id=dic.get('_id', None)
             )
 
 
     @classmethod
     def get_by_email(cls, email):
+        '''Probably deprecated'''
         user = mongo.db.users.find_one({'email': email})
         return cls.from_dict(user)
 

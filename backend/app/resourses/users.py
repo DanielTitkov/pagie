@@ -19,6 +19,7 @@ class UsersApi(Resource):
         self.parser.add_argument('name', required=True)
         self.parser.add_argument('email', type=valid_email, required=True)
         self.parser.add_argument('password', type=valid_password, required=True)
+        self.parser.add_argument('userKey', required=True)
         super(UsersApi, self).__init__()
 
 
@@ -35,11 +36,11 @@ class UsersApi(Resource):
         if mongo.db.users.find_one({'email': args.email}):
             return {'message': 'email already in use'}, 422
 
-        user = User(name=args.name, email=args.email)
+        user = User(name=args.name, email=args.email, user_key=args.userKey)
         user.hash_password(args.password)
         mongo.db.users.insert(user.to_dict())
 
-        return user.to_dict(), 201, {'Location': api.url_for(UserApi, uid = user.uid, _external = True)}
+        return user.to_dict(with_password=False), 201, {'Location': api.url_for(UserApi, uid = user.uid, _external = True)}
 
 
 

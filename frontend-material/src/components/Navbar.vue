@@ -21,7 +21,7 @@
                 <v-btn router to="/login" flat color="grey">
                     <span>Sign in</span>
                 </v-btn>
-                <v-btn flat color="grey">
+                <v-btn router to="/register" flat color="grey">
                     <span>Register</span>
                 </v-btn>
             </div>

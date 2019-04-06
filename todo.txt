@@ -1,7 +1,11 @@
 # front 
-create a single object with url
 select colors
 calendar/history
+
+change crypto algorithm
+maybe delete uuid package
+
+when open empty text counter of words is not good
 
 # back
 user api
