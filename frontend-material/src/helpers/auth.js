@@ -1,9 +1,10 @@
 import axios from 'axios';
+import config from '@/config';
 
 export function login(credentials) {
     return new Promise((res, rej) => {
         axios
-            .post('http://127.0.0.1:5000/v1/token', credentials)
+            .post(config.API_URL + 'token', credentials)
             .then(response => {
                 res(response.data);
             })
@@ -21,4 +22,17 @@ export function getLocalUser() {
     }
 
     return JSON.parse(userStr);
+}
+
+export function postUser(userData) {
+    return new Promise((res, rej) => {
+        axios
+            .post(config.API_URL + 'users', userData)
+            .then(response => {
+                res(response.data);
+            })
+            .catch(err => {
+                rej('Signup failed');
+            });
+    });
 }

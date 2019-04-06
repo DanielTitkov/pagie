@@ -38,6 +38,7 @@
 <script>
 import { countWords } from '@/helpers/text';
 import axios from 'axios';
+import config from '@/config';
 
 var moment = require('moment');
 
