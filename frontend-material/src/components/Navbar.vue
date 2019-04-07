@@ -72,6 +72,7 @@ export default {
             drawer: false,
             links: [
                 { icon: 'favorite', text: 'Write!', route: '/' },
+                { icon: 'local_florist', text: 'About', route: '/about' },
                 { icon: 'face', text: 'Profile', route: '/profile' },
                 {
                     icon: 'format_list_bulleted',
@@ -79,7 +80,7 @@ export default {
                     route: '/programs'
                 },
                 { icon: 'email', text: 'Contacts', route: '/contact' },
-                { icon: 'local_florist', text: 'About', route: '/about' }
+
             ]
         };
     },
