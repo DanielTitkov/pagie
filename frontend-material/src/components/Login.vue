@@ -24,6 +24,11 @@
                             <v-text-field
                                 label="Password"
                                 v-model="form.password"
+                                :type="showPassword ? 'text' : 'password'"
+                                :rules="[rules.required]"
+                                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                @click:append="showPassword = !showPassword"
+                                counter
                             ></v-text-field>
                             <v-btn
                                 depressed
@@ -53,7 +58,11 @@ export default {
                 email: '',
                 password: ''
             },
-            error: null
+            error: null,
+            showPassword: false,
+            rules: {
+              required: value => !!value || 'Required.'
+            }
         };
     },
     methods: {

@@ -6,9 +6,12 @@ from app import jwt
 from app import api
 from app.models.user import User
 import datetime
+import time
 from app.utils.email import valid_email
 from app.utils.password import valid_password
 from app.utils.date import valid_timezone
+from app import app
+
 
 import time
 
@@ -20,6 +23,7 @@ class UsersApi(Resource):
         self.parser.add_argument('email', type=valid_email, required=True)
         self.parser.add_argument('password', type=valid_password, required=True)
         self.parser.add_argument('userKey', required=True)
+        self.parser.add_argument('inviteCode')
         super(UsersApi, self).__init__()
 
 
@@ -33,8 +37,19 @@ class UsersApi(Resource):
     def post(self):
         '''Create new user'''
         args = self.parser.parse_args()
+
         if mongo.db.users.find_one({'email': args.email}):
             return {'message': 'email already in use'}, 422
+
+        if app.config['REQUIRE_INVITE']:
+            invite = mongo.db.invites.find_one({'inviteCode': args.inviteCode})
+            if not invite:
+                return {'message': 'invalid invite code'}, 401
+            if invite['used']:
+                return {'message': 'invite code is already used'}, 422
+            invite['used'] = True
+            invite['user'] = {'email': args.email, 'registered': time.time()}
+            mongo.db.invites.save(invite)
 
         user = User(name=args.name, email=args.email, user_key=args.userKey)
         user.hash_password(args.password)

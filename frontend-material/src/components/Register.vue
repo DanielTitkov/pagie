@@ -19,10 +19,12 @@
                         <v-form class="px-3">
                             <v-text-field
                                 label="Name"
+                                :rules="[rules.required]"
                                 v-model="form.name"
                             ></v-text-field>
                             <v-text-field
                                 label="Email"
+                                :rules="[rules.required]"
                                 v-model="form.email"
                             ></v-text-field>
                             <p>
@@ -40,7 +42,6 @@
                                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                                 @click:append="showPassword = !showPassword"
                                 counter
-
                             ></v-text-field>
                             <v-text-field
                                 label="Repeat password"
@@ -50,11 +51,10 @@
                                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                                 @click:append="showPassword = !showPassword"
                                 counter
-
                             ></v-text-field>
                             <v-text-field
                                 label="Invite code"
-                                v-model="inviteCode"
+                                v-model="form.inviteCode"
                             ></v-text-field>
                             <v-btn
                                 depressed
@@ -77,8 +77,7 @@ import { postUser } from '@/helpers/auth';
 import {
     createUserKey,
     hashUserPassword,
-    encryptUserData,
-    decryptUserData
+    encryptUserData
 } from '@/helpers/crypto';
 
 export default {
@@ -89,12 +88,12 @@ export default {
                 email: '',
                 password: '',
                 userKey: '',
+                inviteCode: ''
             },
             userPasswordHash: '',
             passwordRepeat: '',
             showPassword: false,
             error: null,
-            inviteCode: '',
             rules: {
               required: value => !!value || 'Required.',
               min: v => v.length >= 3 || 'Min 3 characters',

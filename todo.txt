@@ -4,6 +4,8 @@ calendar/history
 
 change crypto algorithm
 maybe delete uuid package
+push error through
+use password hash for auth
 
 when open empty text counter of words is not good
 
