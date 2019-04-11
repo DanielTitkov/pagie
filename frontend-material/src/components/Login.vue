@@ -23,7 +23,7 @@
                             ></v-text-field>
                             <v-text-field
                                 label="Password"
-                                v-model="form.password"
+                                v-model="rawPassword"
                                 :type="showPassword ? 'text' : 'password'"
                                 :rules="[rules.required]"
                                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
@@ -58,6 +58,8 @@ export default {
                 email: '',
                 password: ''
             },
+            rawPassword: '',
+            userPasswordHash: '',
             error: null,
             showPassword: false,
             rules: {
@@ -68,16 +70,15 @@ export default {
     methods: {
         authenticate() {
             this.$store.dispatch('login');
+            this.userPasswordHash = hashUserPassword(this.$data.rawPassword);
+            this.form.password = hashUserPassword(this.rawPassword, 'sha512');
             login(this.$data.form)
                 .then(response => {
-                    var decryptedUserKey = decryptUserData(response.user.userKey, hashUserPassword(this.$data.form.password));
-                    // this.$store.commit('saveUserKey', decryptedUserKey);
+                    var decryptedUserKey = decryptUserData(response.user.userKey, this.userPasswordHash);
                     const loginData = {
                         response: response,
                         decryptedUserKey: decryptedUserKey
                     }
-                    console.log(loginData);
-                    // this.$store.commit('loginSuccess', response);
                     this.$store.commit('loginSuccess', loginData);
                     this.$router.push({ path: '/' });
                 })

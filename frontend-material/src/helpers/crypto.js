@@ -5,9 +5,9 @@ export function createUserKey() {
     return uuidv4(); // change the algorithm later;
 }
 
-export function hashUserPassword(password) {
+export function hashUserPassword(password, hashFunc='sha256') {
     return crypto
-        .createHash('sha256')
+        .createHash(hashFunc)
         .update(password)
         .digest('hex');
 }

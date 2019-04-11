@@ -36,7 +36,7 @@
                             </p>
                             <v-text-field
                                 label="Password"
-                                v-model="form.password"
+                                v-model="rawPassword"
                                 :type="showPassword ? 'text' : 'password'"
                                 :rules="[rules.required, rules.min]"
                                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
@@ -90,6 +90,7 @@ export default {
                 userKey: '',
                 inviteCode: ''
             },
+            rawPassword: '',
             userPasswordHash: '',
             passwordRepeat: '',
             showPassword: false,
@@ -102,12 +103,13 @@ export default {
     },
     computed: {
         passwordError() {
-            return this.form.password != this.passwordRepeat;
+            return this.rawPassword != this.passwordRepeat;
         }
     },
     methods: {
         createUser() {
-            this.userPasswordHash = hashUserPassword(this.form.password);
+            this.userPasswordHash = hashUserPassword(this.rawPassword);
+            this.form.password = hashUserPassword(this.rawPassword, 'sha512'); // using sha512 of user password for auth
             this.form.userKey = encryptUserData(
                 createUserKey(),
                 this.userPasswordHash
