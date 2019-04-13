@@ -2,8 +2,9 @@
     <div class="about">
         <h1 class="secondary--text">Write!</h1>
         <v-container class="my-5">
-            <Calendar />
-            <Writer :dateslug="dateslug" />
+            <AllTexts v-if='!dateslug' />
+            <Calendar v-if='dateslug' />
+            <Writer v-if='dateslug' :dateslug="dateslug" />
         </v-container>
     </div>
 </template>
@@ -20,7 +21,8 @@ export default {
     },
     components: {
         Writer,
-        Calendar
+        Calendar,
+        AllTexts: () => import('@/components/AllTexts.vue')
     },
     created() {
         this.$store.dispatch('getDate');

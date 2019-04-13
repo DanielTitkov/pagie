@@ -92,7 +92,6 @@ export default {
             console.log('Dateslug aquired too early');
         }
     },
-    mounted() {},
     methods: {
         getText: function() {
             this.loading = true;

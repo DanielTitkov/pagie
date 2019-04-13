@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, current_app
 from flask_restful import Resource, Api
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import mongo
@@ -20,7 +20,7 @@ class DatesApi(Resource):
         query = ({'user': current_user.uid}, {'date': 1, '_id': 0})
         dates_with_text = [t['date'] for t in mongo.db.texts.find(*query)]
         ct = current_date(current_user)
-        st = ct - datetime.timedelta(days = 30)
+        st = ct - datetime.timedelta(days = current_app.config['CALENDAR_DAYS'])
         dates = [d.strftime('%Y%m%d') for d in rrule.rrule(rrule.DAILY, dtstart=st, until=ct)]
         response = [{'date': d, 'textPresent': d in dates_with_text} for d in dates]
         return response, 200

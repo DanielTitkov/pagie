@@ -21,3 +21,4 @@ class Config(object):
     JWT_ACCESS_TOKEN_EXPIRES = 86400
 
     REQUIRE_INVITE = True
+    CALENDAR_DAYS = 30
