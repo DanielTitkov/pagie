@@ -46,3 +46,7 @@ export function postUser(userData) {
             });
     });
 }
+
+// export function postUser(userData) {
+//     return axios.post(config.API_URL + 'users', userData);
+// }

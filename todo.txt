@@ -2,10 +2,9 @@
 select colors
 make loaders?
 
-change crypto algorithm
+change crypto algorithm for user key?
 maybe delete uuid package
-push error through
-use password hash for auth
+push error through # that's harder than appears...
 
 when open empty text counter of words is not good
 
