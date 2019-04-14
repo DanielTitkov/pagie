@@ -1,6 +1,6 @@
 <template>
-    <div class="about">
-        <h1 class="secondary--text">Write!</h1>
+    <div class="history">
+        <h1 class="grey--text">History</h1>
         <v-container class="my-5">
             <AllTexts v-if='!dateslug' />
             <Calendar v-if='dateslug' />
@@ -38,6 +38,11 @@ export default {
             this.$router.push('/');
         }
         next();
+    },
+    watch: {
+        $route(to, from) {
+            this.dateslug = to.params.dateslug;
+        }
     }
 };
 </script>

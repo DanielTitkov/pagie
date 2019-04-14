@@ -1,7 +1,17 @@
 <template>
     <div class="AllTexts">
         <h3>{{ status }}</h3>
-        {{ texts }}
+        <v-data-table
+            flat
+          :headers="tableHeaders"
+          :items="texts"
+          :rows-per-page-items='tablePageItems'
+        >
+          <template v-slot:items="props">
+            <td><router-link :to="{ name: 'history', params: { dateslug: props.item.date } }">{{ props.item.date | toReadableDate }}</router-link></td>
+            <td>{{ props.item.words }}</td>
+          </template>
+        </v-data-table>
     </div>
 </template>
 
@@ -12,6 +22,15 @@ import config from "@/config";
 export default {
     data() {
         return {
+            tablePageItems: [10,30,50, {"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
+            tableHeaders: [
+              {
+                text: 'Date',
+                align: 'left',
+                value: 'date'
+              },
+              { text: 'Words', value: 'words', align: 'left' }
+            ],
             texts: [],
             loading: true,
             status: ''

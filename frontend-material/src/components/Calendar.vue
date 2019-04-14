@@ -57,11 +57,6 @@ export default {
     },
     created() {
         this.$store.dispatch('getDatesData');
-    },
-    watch: {
-        $route(to, from) {
-            this.dateslug = to.params.dateslug;
-        }
     }
 };
 </script>

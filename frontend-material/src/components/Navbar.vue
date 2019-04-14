@@ -72,6 +72,7 @@ export default {
             drawer: false,
             links: [
                 { icon: 'favorite', text: 'Write!', route: '/' },
+                {icon: 'calendar_today', text: 'History', route: '/history'},
                 { icon: 'local_florist', text: 'About', route: '/about' },
                 { icon: 'face', text: 'Profile', route: '/profile' },
                 {

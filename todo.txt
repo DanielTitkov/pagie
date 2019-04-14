@@ -1,6 +1,6 @@
 # front 
 select colors
-calendar/history
+make loaders?
 
 change crypto algorithm
 maybe delete uuid package
