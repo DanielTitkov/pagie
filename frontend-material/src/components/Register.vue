@@ -28,18 +28,22 @@
                                 v-model="form.email"
                             ></v-text-field>
                             <p>
-                                Select a good password and remember it well.
-                                It will be used to encrypt your texts
-                                so that even we won't be able to access them.
-                                If you forget the password,
-                                it will be impossible to decrypt your texts.
+                                Select a good password and remember it well. It
+                                will be used to encrypt your texts so that even
+                                we won't be able to access them. If you forget
+                                the password, it will be impossible to decrypt
+                                your texts.
                             </p>
                             <v-text-field
                                 label="Password"
                                 v-model="rawPassword"
                                 :type="showPassword ? 'text' : 'password'"
                                 :rules="[rules.required, rules.min]"
-                                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                :append-icon="
+                                    showPassword
+                                        ? 'visibility'
+                                        : 'visibility_off'
+                                "
                                 @click:append="showPassword = !showPassword"
                                 counter
                             ></v-text-field>
@@ -48,7 +52,11 @@
                                 v-model="passwordRepeat"
                                 :type="showPassword ? 'text' : 'password'"
                                 :rules="[rules.required, rules.min]"
-                                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                :append-icon="
+                                    showPassword
+                                        ? 'visibility'
+                                        : 'visibility_off'
+                                "
                                 @click:append="showPassword = !showPassword"
                                 counter
                             ></v-text-field>
@@ -96,8 +104,8 @@ export default {
             showPassword: false,
             error: null,
             rules: {
-              required: value => !!value || 'Required.',
-              min: v => v.length >= 3 || 'Min 3 characters',
+                required: value => !!value || 'Required.',
+                min: v => v.length >= 3 || 'Min 3 characters'
             }
         };
     },

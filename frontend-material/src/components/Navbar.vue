@@ -72,7 +72,7 @@ export default {
             drawer: false,
             links: [
                 { icon: 'favorite', text: 'Write!', route: '/' },
-                {icon: 'calendar_today', text: 'History', route: '/history'},
+                { icon: 'calendar_today', text: 'History', route: '/history' },
                 { icon: 'local_florist', text: 'About', route: '/about' },
                 { icon: 'face', text: 'Profile', route: '/profile' },
                 {
@@ -80,8 +80,7 @@ export default {
                     text: 'Programs',
                     route: '/programs'
                 },
-                { icon: 'email', text: 'Contacts', route: '/contact' },
-
+                { icon: 'email', text: 'Contacts', route: '/contact' }
             ]
         };
     },

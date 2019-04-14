@@ -24,7 +24,6 @@ export function getLocalUser() {
     return JSON.parse(userStr);
 }
 
-
 export function getLocalUserKey() {
     const userKey = localStorage.getItem('userKey');
 
@@ -32,9 +31,8 @@ export function getLocalUserKey() {
         return null;
     }
 
-    return userKey
+    return userKey;
 }
-
 
 export function postUser(userData) {
     return new Promise((res, rej) => {

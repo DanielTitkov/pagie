@@ -55,7 +55,8 @@ export default {
             localStorage.setItem('userKey', payload.decryptedUserKey);
             state.currentUserKey = payload.decryptedUserKey;
         },
-        saveUserKey(state, payload) { // not really good??
+        saveUserKey(state, payload) {
+            // not really good??
             localStorage.setItem('userKey', payload);
         },
         loginFailed(state, payload) {
@@ -113,15 +114,10 @@ export default {
         updateUser({ commit, state }, payload) {
             return new Promise((resolve, reject) => {
                 axios
-                    .post(
-                        config.API_URL + 'users/' + payload.uid,
-                        payload,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${
-                                    state.currentUser.token
-                                }`
-                            }
+                    .post(config.API_URL + 'users/' + payload.uid, payload, {
+                        headers: {
+                            Authorization: `Bearer ${state.currentUser.token}`
+                        }
                     })
                     .then(response => {
                         commit(

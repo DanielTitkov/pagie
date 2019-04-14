@@ -26,7 +26,11 @@
                                 v-model="rawPassword"
                                 :type="showPassword ? 'text' : 'password'"
                                 :rules="[rules.required]"
-                                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                :append-icon="
+                                    showPassword
+                                        ? 'visibility'
+                                        : 'visibility_off'
+                                "
                                 @click:append="showPassword = !showPassword"
                                 counter
                             ></v-text-field>
@@ -63,7 +67,7 @@ export default {
             error: null,
             showPassword: false,
             rules: {
-              required: value => !!value || 'Required.'
+                required: value => !!value || 'Required.'
             }
         };
     },
@@ -74,11 +78,14 @@ export default {
             this.form.password = hashUserPassword(this.rawPassword, 'sha512');
             login(this.$data.form)
                 .then(response => {
-                    var decryptedUserKey = decryptUserData(response.user.userKey, this.userPasswordHash);
+                    var decryptedUserKey = decryptUserData(
+                        response.user.userKey,
+                        this.userPasswordHash
+                    );
                     const loginData = {
                         response: response,
                         decryptedUserKey: decryptedUserKey
-                    }
+                    };
                     this.$store.commit('loginSuccess', loginData);
                     this.$router.push({ path: '/' });
                 })

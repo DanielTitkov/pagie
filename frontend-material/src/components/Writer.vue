@@ -39,7 +39,7 @@
 import { countWords } from '@/helpers/text';
 import { encryptUserData, decryptUserData } from '@/helpers/crypto';
 import axios from 'axios';
-import config from "@/config";
+import config from '@/config';
 
 var moment = require('moment');
 
@@ -110,7 +110,10 @@ export default {
                 .then(response => {
                     if (response.data[0]) {
                         var encryptedText = response.data[0].text;
-                        this.text = decryptUserData(encryptedText, this.currentUserKey);
+                        this.text = decryptUserData(
+                            encryptedText,
+                            this.currentUserKey
+                        );
                     } else {
                         this.text = 'No text for this date';
                     }
@@ -129,9 +132,12 @@ export default {
                 .post(
                     config.API_URL + 'texts',
                     {
-                        text: encryptUserData(instance.text, instance.currentUserKey),
+                        text: encryptUserData(
+                            instance.text,
+                            instance.currentUserKey
+                        ),
                         dateslug: instance.date,
-                        words: instance.wordsCount,
+                        words: instance.wordsCount
                     },
                     {
                         headers: {

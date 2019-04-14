@@ -5,7 +5,7 @@ export function createUserKey() {
     return uuidv4(); // change the algorithm later;
 }
 
-export function hashUserPassword(password, hashFunc='sha256') {
+export function hashUserPassword(password, hashFunc = 'sha256') {
     return crypto
         .createHash(hashFunc)
         .update(password)

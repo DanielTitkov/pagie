@@ -3,38 +3,51 @@
         <h3>{{ status }}</h3>
         <v-data-table
             flat
-          :headers="tableHeaders"
-          :items="texts"
-          :rows-per-page-items='tablePageItems'
+            :headers="tableHeaders"
+            :items="texts"
+            :rows-per-page-items="tablePageItems"
         >
-          <template v-slot:items="props">
-            <td><router-link :to="{ name: 'history', params: { dateslug: props.item.date } }">{{ props.item.date | toReadableDate }}</router-link></td>
-            <td>{{ props.item.words }}</td>
-          </template>
+            <template v-slot:items="props">
+                <td>
+                    <router-link
+                        :to="{
+                            name: 'history',
+                            params: { dateslug: props.item.date }
+                        }"
+                        >{{ props.item.date | toReadableDate }}</router-link
+                    >
+                </td>
+                <td>{{ props.item.words }}</td>
+            </template>
         </v-data-table>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import config from "@/config";
+import config from '@/config';
 
 export default {
     data() {
         return {
-            tablePageItems: [10,30,50, {"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
+            tablePageItems: [
+                10,
+                30,
+                50,
+                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+            ],
             tableHeaders: [
-              {
-                text: 'Date',
-                align: 'left',
-                value: 'date'
-              },
-              { text: 'Words', value: 'words', align: 'left' }
+                {
+                    text: 'Date',
+                    align: 'left',
+                    value: 'date'
+                },
+                { text: 'Words', value: 'words', align: 'left' }
             ],
             texts: [],
             loading: true,
             status: ''
-        }
+        };
     },
     methods: {
         fetchTexts() {
@@ -61,8 +74,7 @@ export default {
     created() {
         this.fetchTexts();
     }
-}
+};
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

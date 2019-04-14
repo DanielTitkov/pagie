@@ -2,9 +2,9 @@
     <div class="history">
         <h1 class="grey--text">History</h1>
         <v-container class="my-5">
-            <AllTexts v-if='!dateslug' />
-            <Calendar v-if='dateslug' />
-            <Writer v-if='dateslug' :dateslug="dateslug" />
+            <AllTexts v-if="!dateslug" />
+            <Calendar v-if="dateslug" />
+            <Writer v-if="dateslug" :dateslug="dateslug" />
         </v-container>
     </div>
 </template>
