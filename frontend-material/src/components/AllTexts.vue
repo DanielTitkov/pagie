@@ -8,8 +8,9 @@
             :rows-per-page-items="tablePageItems"
         >
             <template v-slot:items="props">
-                <td>
+                <td class="title">
                     <router-link
+                        class="date-link"
                         :to="{
                             name: 'history',
                             params: { dateslug: props.item.date }
@@ -17,7 +18,16 @@
                         >{{ props.item.date | toReadableDate }}</router-link
                     >
                 </td>
-                <td>{{ props.item.words }}</td>
+                <td class="text-xs-right title">{{ props.item.words }}</td>
+                <td class="text-xs-right title">
+                    <router-link
+                        :to="{
+                            name: 'history',
+                            params: { dateslug: props.item.date }
+                        }"
+                        ><v-icon color="primary">remove_red_eye</v-icon>
+                    </router-link>
+                </td>
             </template>
         </v-data-table>
     </div>
@@ -40,9 +50,23 @@ export default {
                 {
                     text: 'Date',
                     align: 'left',
-                    value: 'date'
+                    value: 'date',
+                    class: 'title',
+                    width: '70%'
                 },
-                { text: 'Words', value: 'words', align: 'left' }
+                {
+                    text: 'Words',
+                    value: 'words',
+                    align: 'right',
+                    class: 'title'
+                },
+                {
+                    text: 'View',
+                    value: 'view',
+                    align: 'right',
+                    class: 'title',
+                    sortable: false
+                }
             ],
             texts: [],
             loading: true,
@@ -64,7 +88,7 @@ export default {
                 .then(response => {
                     this.texts = response.data;
                     this.loading = false;
-                    this.status = 'updated';
+                    this.status = '';
                 })
                 .catch(error => {
                     console.log(error);
@@ -77,4 +101,8 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.date-link {
+    text-decoration: none;
+}
+</style>
