@@ -106,3 +106,7 @@ venv.bak/
 
 # windows stuff
 .bat
+
+
+# temporary volumes
+/data

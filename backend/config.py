@@ -7,6 +7,7 @@ load_dotenv(os.path.join(basedir, '.env'))
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret777'
     JWT_SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret777'
+    PROPAGATE_EXCEPTIONS = True
 
     MONGO_URI = os.environ.get('DATABASE_URL') or 'mongodb://localhost:27017/pagie'
 
