@@ -110,3 +110,4 @@ venv.bak/
 
 # temporary volumes
 /data
+/logs

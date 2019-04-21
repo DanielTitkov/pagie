@@ -7,3 +7,6 @@
 
 добавить в авторизацию refresh token
 https://www.youtube.com/watch?v=_BSag4ABBMY
+
+
+переместить управление env в докер-компоуз

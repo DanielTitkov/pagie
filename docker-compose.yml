@@ -1,7 +1,6 @@
 version: '3.5'
 
 services:
-
     backend:
         build: ./backend
         ports:
@@ -12,6 +11,8 @@ services:
             - mongo
         volumes:
             - ./backend:/home/pagie
+        networks:
+            - app_net
         environment:
             - ENV=development
             - PORT=5000
@@ -20,9 +21,17 @@ services:
     frontend:
         build: ./frontend-material
         ports:
-            - '9999:80'
+            - '80:80'
+            - '443:443'
+        # volumes:
+        #     # - ./nginx/conf.d:/etc/nginx/conf.d
+        #     - ./logs:/var/log/nginx/
         depends_on:
             - backend
+        links:
+            - backend:backend
+        networks:
+            - app_net
     mongo:
         image: mongo:latest
         container_name: "mongo"
@@ -35,4 +44,11 @@ services:
             - '27072:27017'
         expose:
             - '27017'
+        networks:
+            - app_net
         command: mongod --smallfiles --logpath=/dev/null
+
+
+networks:
+  app_net:
+    driver: "bridge"
