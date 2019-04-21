@@ -2,8 +2,6 @@ import axios from 'axios';
 import config from '@/config';
 
 export function login(credentials) {
-    console.log(credentials);
-    console.log(config.API_URL);
     return new Promise((res, rej) => {
         axios
             .post(config.API_URL + 'token', credentials)

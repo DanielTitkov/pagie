@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, current_app
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import mongo
@@ -37,7 +37,7 @@ class UsersApi(Resource):
     def post(self):
         '''Create new user'''
         args = self.parser.parse_args()
-
+        
         if mongo.db.users.find_one({'email': args.email}):
             return {'message': 'email already in use'}, 422
 

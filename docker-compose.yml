@@ -13,10 +13,8 @@ services:
             - ./backend:/home/pagie
         networks:
             - app_net
-        environment:
-            - ENV=development
-            - PORT=5000
-            - DATABASE_URL=mongodb://mongo:27017/pagie
+        env_file:
+            - .env
         command: gunicorn -w 4 -b :5000 --access-logfile - --error-logfile - pagie:app
     frontend:
         build: ./frontend-material
@@ -28,8 +26,6 @@ services:
         #     - ./logs:/var/log/nginx/
         depends_on:
             - backend
-        links:
-            - backend:backend
         networks:
             - app_net
     mongo:
@@ -38,16 +34,17 @@ services:
         environment:
             - MONGO_DATA_DIR=/usr/data/db
             - MONGO_LOG_DIR=/dev/null
+            # - MONGO_INITDB_ROOT_USERNAME=root
+            # - MONGO_INITDB_ROOT_PASSWORD=password
         volumes:
             - ./data/db:/usr/data/db
         ports:
             - '27072:27017'
         expose:
             - '27017'
+        command: mongod --smallfiles --logpath=/dev/null
         networks:
             - app_net
-        command: mongod --smallfiles --logpath=/dev/null
-
 
 networks:
   app_net:
