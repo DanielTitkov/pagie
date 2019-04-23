@@ -37,14 +37,14 @@ class UsersApi(Resource):
     def post(self):
         '''Create new user'''
         args = self.parser.parse_args()
-        
+
         if mongo.db.users.find_one({'email': args.email}):
             return {'message': 'email already in use'}, 422
 
         if app.config['REQUIRE_INVITE']:
             invite = mongo.db.invites.find_one({'inviteCode': args.inviteCode})
             if not invite:
-                return {'message': 'invalid invite code'}, 401
+                return {'message': 'invalid invite code'}, 422
             if invite['used']:
                 return {'message': 'invite code is already used'}, 422
             invite['used'] = True

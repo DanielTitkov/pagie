@@ -21,9 +21,8 @@ services:
         ports:
             - '80:80'
             - '443:443'
-        # volumes:
-        #     # - ./nginx/conf.d:/etc/nginx/conf.d
-        #     - ./logs:/var/log/nginx/
+        volumes:
+            - ./logs/nginx:/var/log/nginx/
         depends_on:
             - backend
         networks:
@@ -33,11 +32,14 @@ services:
         container_name: "mongo"
         environment:
             - MONGO_DATA_DIR=/usr/data/db
-            - MONGO_LOG_DIR=/dev/null
-            # - MONGO_INITDB_ROOT_USERNAME=root
-            # - MONGO_INITDB_ROOT_PASSWORD=password
+            - MONGO_LOG_DIR=/logs
+            - MONGO_INITDB_ROOT_USERNAME=foo
+            - MONGO_INITDB_ROOT_PASSWORD=pass
+            - MONGO_INITDB_DATABASE=pagie
         volumes:
             - ./data/db:/usr/data/db
+            - ./logs/mongo:/logs/
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
         ports:
             - '27072:27017'
         expose:
