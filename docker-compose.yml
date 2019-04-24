@@ -17,7 +17,10 @@ services:
             - .env
         command: gunicorn -w 4 -b :5000 --access-logfile - --error-logfile - pagie:app
     frontend:
-        build: ./frontend-material
+        build:
+            context: ./frontend-material
+            args:
+                API_URL: ${API_URL}
         ports:
             - '80:80'
             - '443:443'
@@ -27,6 +30,8 @@ services:
             - backend
         networks:
             - app_net
+        env_file:
+            - .env
     mongo:
         image: mongo:latest
         container_name: "mongo"

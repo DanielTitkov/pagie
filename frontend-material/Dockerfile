@@ -1,15 +1,13 @@
 # build stage
 FROM node:lts-alpine as build-stage
-
-# RUN npm install -g http-server
-
+RUN apk add gettext libintl
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ARG API_URL
+RUN envsubst < ./src/config.js.tmpl > ./src/config.js
 RUN npm run build
-# EXPOSE 8080
-# CMD [ "http-server", "dist" ]
 
 # production-stage
 FROM nginx:stable-alpine as production-stage

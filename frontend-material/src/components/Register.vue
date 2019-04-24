@@ -124,11 +124,9 @@ export default {
             );
             postUser(this.$data.form)
                 .then(response => {
-                    console.log(response);
                     this.$router.push({ path: '/login' });
                 })
                 .catch(err => {
-                    console.log(err);
                     this.error = 'Signup failed';
                 });
         }
