@@ -33,25 +33,29 @@ services:
         env_file:
             - .env
     mongo:
-        image: mongo:latest
+        build:
+            context: ./mongo
+            args:
+                MONGO_DATA_DIR: /data/db
+                MONGO_LOG_DIR: /logs
+                MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+                MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+                DB_NAME: ${DB_NAME}
+                DB_USER: ${DB_USER}
+                DB_PASSWORD: ${DB_PASSWORD}
         container_name: "mongo"
-        environment:
-            - MONGO_DATA_DIR=/usr/data/db
-            - MONGO_LOG_DIR=/logs
-            - MONGO_INITDB_ROOT_USERNAME=foo
-            - MONGO_INITDB_ROOT_PASSWORD=pass
-            - MONGO_INITDB_DATABASE=pagie
         volumes:
-            - ./data/db:/usr/data/db
-            - ./logs/mongo:/logs/
-            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            # - ./data/db:/data/db
+            - ./logs/mongo:/logs
         ports:
             - '27072:27017'
         expose:
             - '27017'
-        command: mongod --smallfiles --logpath=/dev/null
+        command: mongod --smallfiles
         networks:
             - app_net
+        env_file:
+            - .env
 
 networks:
   app_net:
