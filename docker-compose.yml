@@ -21,6 +21,8 @@ services:
             context: ./frontend-material
             args:
                 API_URL: ${API_URL}
+                API_PROXY_PATH: ${API_PROXY_PATH}
+                SERVER_NAME: ${SERVER_NAME}
         ports:
             - '80:80'
             - '443:443'
@@ -51,11 +53,11 @@ services:
             - '27072:27017'
         expose:
             - '27017'
-        command: mongod --smallfiles
         networks:
             - app_net
         env_file:
             - .env
+        command: mongod --smallfiles --logpath /dev/null
 
 networks:
   app_net:
