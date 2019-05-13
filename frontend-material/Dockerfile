@@ -9,6 +9,7 @@ ARG API_URL
 RUN envsubst < ./src/config.js.tmpl > ./src/config.js
 RUN ls -a
 RUN npm run build
+RUN ls -a
 
 # production-stage
 FROM nginx:stable-alpine as production-stage
