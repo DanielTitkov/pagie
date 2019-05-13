@@ -4,9 +4,10 @@ RUN apk add gettext libintl
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY . .
+COPY . ./
 ARG API_URL
 RUN envsubst < ./src/config.js.tmpl > ./src/config.js
+RUN ls -a
 RUN npm run build
 
 # production-stage
