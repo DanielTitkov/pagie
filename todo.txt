@@ -1,6 +1,7 @@
 # front
 select colors
 make loaders?
+proper favicon and titles
 
 change crypto algorithm for user key?
 maybe delete uuid package
