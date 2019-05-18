@@ -1,2 +1,3 @@
 FLASK_APP=pagie.py
 FLASK_DEBUG=1
+DB_HOST=localhost:27017

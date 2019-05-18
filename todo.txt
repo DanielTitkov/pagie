@@ -1,7 +1,6 @@
 # front
 select colors
 make loaders?
-proper favicon and titles
 
 change crypto algorithm for user key?
 maybe delete uuid package
@@ -12,7 +11,7 @@ when open empty text counter of words is not good
 # back
 user api
 
-разобраться с томами Монго? 
+разобраться с томами Монго?
 сделать докер-компоуз для продакшена, где будет (возможно) другой домен (из энв?)
 
 Разместить на сервере
