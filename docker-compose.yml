@@ -27,7 +27,8 @@ services:
             - '80:80'
             - '443:443'
         volumes:
-            - ./dist:/app/dist
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
             - ./logs/nginx:/var/log/nginx/
         depends_on:
             - backend
@@ -48,9 +49,6 @@ services:
                 DB_PASSWORD: ${DB_PASSWORD}
         container_name: "mongo"
         volumes:
-            - ./web-root:/var/www/html
-            - ./webroot:/usr/share/nginx/html
-            - ./nginx-conf:/etc/nginx/conf.d
             # - ./data/db:/data/db
             - ./logs/mongo:/logs
         ports:
