@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+    frontend:
+        volumes:
+            - ./logs/nginx:/var/log/nginx/
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+    certbot:
+        image: certbot/certbot
+        container_name: certbot
+        volumes:
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+            - web-root:/var/www/html
+        depends_on:
+            - frontend
+        command: certonly --webroot --webroot-path=/var/www/html --email mytasmic@gmail.com --agree-tos --no-eff-email --staging -d pagieapp.com  -d www.pagieapp.com

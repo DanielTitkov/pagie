@@ -27,13 +27,14 @@ services:
             - '80:80'
             - '443:443'
         volumes:
+            - ./dist:/app/dist
             - ./logs/nginx:/var/log/nginx/
         depends_on:
             - backend
-        networks:
-            - app_net
         env_file:
             - .env
+        networks:
+            - app_net
     mongo:
         build:
             context: ./mongo
@@ -47,6 +48,9 @@ services:
                 DB_PASSWORD: ${DB_PASSWORD}
         container_name: "mongo"
         volumes:
+            - ./web-root:/var/www/html
+            - ./webroot:/usr/share/nginx/html
+            - ./nginx-conf:/etc/nginx/conf.d
             # - ./data/db:/data/db
             - ./logs/mongo:/logs
         ports:
