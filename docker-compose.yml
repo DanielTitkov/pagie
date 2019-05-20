@@ -1,6 +1,7 @@
 version: '3.5'
 
 services:
+
     backend:
         build: ./backend
         ports:
@@ -16,6 +17,7 @@ services:
         env_file:
             - .env
         command: gunicorn -w 4 -b :5000 --access-logfile - --error-logfile - pagie:app
+
     frontend:
         build:
             context: ./frontend-material
@@ -23,6 +25,7 @@ services:
                 API_URL: ${API_URL}
                 API_PROXY_PATH: ${API_PROXY_PATH}
                 SERVER_NAME: ${SERVER_NAME}
+        restart: unless-stopped
         ports:
             - '80:80'
             - '443:443'
@@ -36,6 +39,8 @@ services:
             - .env
         networks:
             - app_net
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
     mongo:
         build:
             context: ./mongo
@@ -60,6 +65,14 @@ services:
         env_file:
             - .env
         command: mongod --smallfiles --logpath /dev/null
+
+    certbot:
+       image: certbot/certbot
+       restart: unless-stopped
+       volumes:
+           - ./data/certbot/conf:/etc/letsencrypt
+           - ./data/certbot/www:/var/www/certbot
+       entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 networks:
   app_net:
