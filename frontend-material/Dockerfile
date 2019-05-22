@@ -13,9 +13,10 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 ARG API_PROXY_PATH
 ARG SERVER_NAME
+ARG MODE
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY ./nginx/prod.conf.tmpl /temp/prod.conf.tmpl
-RUN envsubst '$API_PROXY_PATH $SERVER_NAME' < /temp/prod.conf.tmpl > /etc/nginx/conf.d/default.conf
+COPY ./nginx/$MODE.conf.tmpl /temp/$MODE.conf.tmpl
+RUN envsubst '$API_PROXY_PATH $SERVER_NAME' < /temp/$MODE.conf.tmpl > /etc/nginx/conf.d/default.conf
 EXPOSE 80
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
