@@ -7,6 +7,8 @@ maybe delete uuid package
 push error through # that's harder than appears...
 
 when open empty text counter of words is not good
+on login fail error message is not hiding
+old records and calendar?
 
 # back
 user api
@@ -16,3 +18,12 @@ user api
 
 Разместить на сервере
 Сделать https
+email validation?
+
+# PWA
+
+# UX
+
+writing timer (with saving the state?)
+soft word limit
+targets/goals

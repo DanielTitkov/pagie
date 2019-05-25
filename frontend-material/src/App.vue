@@ -24,4 +24,9 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Marck+Script&display=swap');
+
+.pagie-title {
+    font-family: 'Marck Script', cursive !important;
+}
 </style>

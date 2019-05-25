@@ -6,10 +6,13 @@
                 class="grey--text"
                 @click="drawer = !drawer"
             ></v-toolbar-side-icon>
-            <v-toolbar-title class="text-uppercase grey--text">
-                <span class="font-weight-light">Pagie</span>
+            <v-toolbar-title class="grey--text">
+                <span class="font-weight-light pagie-title">Pagie</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-btn router to="/intro" flat color="grey">
+                <span>Intro</span>
+            </v-btn>
             <div v-if="currentUser">
                 <!-- <h2>{{ currentUser.name }}</h2> -->
                 <v-btn flat mdAndUp color="grey" @click="logout">
