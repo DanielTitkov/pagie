@@ -2,7 +2,11 @@
     <div class="calendar">
         <v-layout row wrap justify-center>
             <v-flex xs12 md10 lg8 xl6 my-3>
-                <span class="calendar-item-wrapper" v-for="date in datesData">
+                <span
+                    class="calendar-item-wrapper"
+                    v-for="date in datesData"
+                    v-bind:key="date.date"
+                >
                     <router-link
                         :to="{
                             name: 'history',

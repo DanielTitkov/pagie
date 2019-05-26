@@ -89,7 +89,6 @@ export default {
     created() {
         if (this.dateslug && this.dateslug.length == 8) {
             this.getText();
-            console.log('Dateslug aquired too early');
         }
     },
     methods: {
