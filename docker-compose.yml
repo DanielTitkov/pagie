@@ -51,7 +51,6 @@ services:
                 DB_PASSWORD: ${DB_PASSWORD}
         container_name: "mongo"
         volumes:
-            # - ./data/db:/data/db
             - ./logs/mongo:/logs
         ports:
             - '27072:27017'
