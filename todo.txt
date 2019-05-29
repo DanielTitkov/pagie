@@ -6,19 +6,16 @@ change crypto algorithm for user key?
 maybe delete uuid package
 push error through # that's harder than appears...
 
-when open empty text counter of words is not good
+timezone
 on login fail error message is not hiding
-old records and calendar?
 
 # back
-user api
-
-разобраться с томами Монго?
-сделать докер-компоуз для продакшена, где будет (возможно) другой домен (из энв?)
-
-Разместить на сервере
-Сделать https
 email validation?
+dashboard
+refresh token
+more logging?
+no mount
+maybe send timezone?
 
 # PWA
 

@@ -13,8 +13,6 @@ from app.utils.date import valid_timezone
 from app import app
 
 
-import time
-
 
 class UsersApi(Resource):
     def __init__(self):

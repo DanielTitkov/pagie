@@ -57,16 +57,16 @@ class User:
 
     @classmethod
     def from_dict(cls, dic):
-        if dic: # wtf is this? 
+        if dic: # wtf is this?
             return cls(
-                uid=dic.get('uid', None),
-                name=dic.get('name', None),
-                email=dic.get('email', None),
-                password_hash=dic.get('passwordHash', None),
-                timezone=dic.get('timezone', None),
-                created=dic.get('created', None),
-                user_key=dic.get('userKey', None),
-                _id=dic.get('_id', None)
+                uid=dic.get('uid'),
+                name=dic.get('name'),
+                email=dic.get('email'),
+                password_hash=dic.get('passwordHash'),
+                timezone=dic.get('timezone'),
+                created=dic.get('created'),
+                user_key=dic.get('userKey'),
+                _id=dic.get('_id')
             )
 
 
