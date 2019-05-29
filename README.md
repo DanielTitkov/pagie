@@ -2,4 +2,4 @@
 
 Pagie is an app for expressive writing.
 
-[pagieapp.com](https://pagieapp "Pagie App")
+[pagieapp.com](https://pagieapp.com "Pagie App")
