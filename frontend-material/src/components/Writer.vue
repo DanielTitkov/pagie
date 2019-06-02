@@ -159,7 +159,7 @@ export default {
             var self = this;
             this.saveTimeout = setTimeout(function() {
                 self.saveText(self, false);
-            }, 2000);
+            }, 1000);
         }
     }
 };
