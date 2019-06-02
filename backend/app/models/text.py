@@ -38,12 +38,12 @@ class Text:
     def from_dict(cls, dic):
         if dic:
             return cls(
-                tid=dic.get('tid', None),
-                user=dic.get('user', None),
-                text=dic.get('text', None),
-                date=dic.get('date', None),
-                words=dic.get('words', None),
-                created=dic.get('created', None),
-                updated=dic.get('updated', None),
-                _id=dic.get('_id', None)
+                tid=dic.get('tid'),
+                user=dic.get('user'),
+                text=dic.get('text'),
+                date=dic.get('date'),
+                words=dic.get('words'),
+                created=dic.get('created'),
+                updated=dic.get('updated'),
+                _id=dic.get('_id')
             )
