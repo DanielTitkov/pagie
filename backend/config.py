@@ -21,7 +21,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret'
     JWT_SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret'
     PROPAGATE_EXCEPTIONS = True
-    JWT_ACCESS_TOKEN_EXPIRES = 86400
+    JWT_ACCESS_TOKEN_EXPIRES = 259200
 
     # UX features
     REQUIRE_INVITE = True

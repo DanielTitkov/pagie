@@ -9,7 +9,7 @@ import uuid
 
 class User:
     def __init__(self, uid=None, name=None, email=None, password_hash=None,
-        timezone='America/New_York', user_key=None,
+        timezone='Europe/Moscow', user_key=None,
         created=None, _id=None
     ):
         self.uid = uid or uuid.uuid4().hex
