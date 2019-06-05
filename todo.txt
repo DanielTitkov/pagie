@@ -24,3 +24,8 @@ maybe send timezone?
 writing timer (with saving the state?)
 soft word limit
 targets/goals
+
+
+# user-reported bugs
+namecheck on register
+show errors 
